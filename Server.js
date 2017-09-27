@@ -52,6 +52,11 @@ User.getAuthenticated("nigga", "chootiya", function(err, user, reason) {
 });
 /*
 // save user to database
+/*
+=======
+/*
+// save user to database
+>>>>>>> 9a58c6df1082e97e0bb904377a3d195b9ed39512
 user1.save(function(err) {
     
     if(err) {
@@ -82,7 +87,10 @@ user1.save(function(err) {
         }
     });
 });
+<<<<<<< HEAD
+=======
 
+>>>>>>> 9a58c6df1082e97e0bb904377a3d195b9ed39512
 */
 // additional code
 app.set('port', (process.env.PORT || 3000));
