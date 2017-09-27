@@ -4,8 +4,8 @@ var express = require("express"),
     path = __dirname + '/views/',
     router = express.Router(),
     mongoose = require('mongoose'),
-    bcrypt = require('bcrypt'),
-    SALT_WORK_FACTOR = 10;
+    User = require('./public/Users');
+    
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));   // to support URL-encoded bodie
@@ -18,54 +18,73 @@ db.once('open', function() {
 });
 
 var Schema = mongoose.Schema;
-    
 
-var UserSchema = new Schema({
-    username: { type: String, required: true, index: { unique: true } },
-    password: { type: String, required: true }
-});
-
-
-
-UserSchema.pre('save', function(next){ 
-var user = this;
-// only hash the password if it has been modified (or is new)
-if (!user.isModified('password')) return next();
-
-// generate a salt
-bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    if (err) return next(err);
-
-    // hash the password along with our new salt
-    bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) return next(err);
-
-        // override the cleartext password with the hashed one
-        user.password = hash;
-        next();
-    });
-});
-
-});
-
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
-}
-        
-
-
-var UserKitty = mongoose.model('UserKitty',UserSchema);
+// create a user a new user
+var UserKitty = User;
 var user1 = new UserKitty( {
     username: "nigga",
     password: "chootiya"
 });
 console.log(user1);
 
+User.getAuthenticated("nigga", "chootiya", function(err, user, reason) {
+        if (err) throw err;
 
-// addictional code
+        // login was successful if we have a user
+        if (user) {
+            // handle login success
+            console.log('login success');
+            return;
+        }
+        // otherwise we can determine why we failed
+        var reasons = User.failedLogin;
+        switch (reason) {
+            case reasons.NOT_FOUND:
+            case reasons.PASSWORD_INCORRECT:
+                // note: these cases are usually treated the same - don't tell
+                // the user *why* the login failed, only that it did
+                break;
+            case reasons.MAX_ATTEMPTS:
+                // send email or otherwise notify user that account is
+                // temporarily locked
+                break;
+        }
+});
+/*
+// save user to database
+user1.save(function(err) {
+    
+    if(err) {
+        throw err;
+    }
+    // attempt to authenticate user
+    User.getAuthenticated(user1.username, 'chootiya', function(err, user, reason) {
+        if (err) throw err;
+
+        // login was successful if we have a user
+        if (user) {
+            // handle login success
+            console.log('login success');
+            return;
+        }
+        // otherwise we can determine why we failed
+        var reasons = User.failedLogin;
+        switch (reason) {
+            case reasons.NOT_FOUND:
+            case reasons.PASSWORD_INCORRECT:
+                // note: these cases are usually treated the same - don't tell
+                // the user *why* the login failed, only that it did
+                break;
+            case reasons.MAX_ATTEMPTS:
+                // send email or otherwise notify user that account is
+                // temporarily locked
+                break;
+        }
+    });
+});
+
+*/
+// additional code
 app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(__dirname + '/public'));
@@ -88,7 +107,7 @@ res.render('login');
 //res.sendFile(path + "index.html");
 });
 
-app.post('/register',function(req, res) {
+app.post('/login',function(req, res) {
     var currentUser = new UserKitty( {
         username:    req.body.username,
         password:   req.body.password
