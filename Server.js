@@ -121,9 +121,9 @@ app.post("/register", function(req, res) {
         password:   req.body.password,
         username:   req.body.email
     })
-    if(createUser(currentUser)) {
+   // if(createUser(currentUser)) {
     res.redirect("/user");
-    }
+    //}
 });
 
 app.post('/login',function(req, res) {
@@ -131,9 +131,9 @@ app.post('/login',function(req, res) {
         username:    req.body.username,
         password:   req.body.password
     });
-    if(getAuth(currentUser)) {
-        res.redirect("/user");
-    }    
+  //  if(getAuth(currentUser)) {
+     res.redirect("/user");
+//    }    
 });
 
 

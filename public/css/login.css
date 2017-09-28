@@ -42,6 +42,11 @@
 .form button:hover,.form button:active,.form button:focus {
 	background: #fcb150;
 }
+.title {
+    padding-right: 200px;
+    color:#1a4e95;
+    font-family: "Roboto", sans-serif;
+}
 .form .message {
 	margin: 15px 0 0;
 	color: #b3b3b3;
