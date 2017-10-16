@@ -4,13 +4,14 @@ var express = require("express"),
     path = __dirname + '/views/',
     router = express.Router(),
     mongoose = require('mongoose'),
-    User = require('./public/Users');
+    User = require('./public/Users'),
+    secretKey = require('./secretKey.json');
     
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));   // to support URL-encoded bodie
 
-mongoose.connect('mongodb://localhost:27017/gameon', {useMongoClient: true});
+mongoose.connect(secretKey.key, {useMongoClient: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -121,9 +122,9 @@ app.post("/register", function(req, res) {
         password:   req.body.password,
         username:   req.body.email
     })
-   // if(createUser(currentUser)) {
+    if(createUser(currentUser)) {
     res.redirect("/user");
-    //}
+    }
 });
 
 app.post('/login',function(req, res) {
@@ -131,9 +132,12 @@ app.post('/login',function(req, res) {
         username:    req.body.username,
         password:   req.body.password
     });
-  //  if(getAuth(currentUser)) {
-     res.redirect("/user");
-//    }    
+    getAuth(currentUser, function(sucess) {
+        if(sucess)
+            res.redirect("/user");
+        else 
+            res.redirect("/");
+    });
 });
 
 
@@ -141,7 +145,7 @@ app.listen(app.get('port'), function() {
 console.log('Node app is running on port', app.get('port'));
 });
 
-function getAuth(user) {
+function getAuth(user, sucess) {
     
     
     // attempt to authenticate user
@@ -152,21 +156,23 @@ function getAuth(user) {
         if (user) {
             // handle login success
             console.log('login success');
-            return true;
+            sucess(true);
         }
         // otherwise we can determine why we failed
         var reasons = User.failedLogin;
         switch (reason) {
             case reasons.NOT_FOUND:
+                console.log("NOT FOUND");
+                sucess(false);
+                break;
             case reasons.PASSWORD_INCORRECT:
                 // note: these cases are usually treated the same - don't tell
                 // the user *why* the login failed, only that it did
-                break;
-            case reasons.MAX_ATTEMPTS:
-                // send email or otherwise notify user that account is
-                // temporarily locked
+                console.log("password incorrect");
+                sucess(false);
                 break;
         }
+        
     });   
 }
 function createUser(user) {
