@@ -1,0 +1,15 @@
+
+.cardcolor {
+    color:greenyellow;
+    background-color: black;
+}
+.tabs .indicator { 
+    background-color: #76ff03; 
+    
+}
+a {
+    color: #76ff03;
+}
+.carousel .carousel-item{
+  width:100%;
+}
