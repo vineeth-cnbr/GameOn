@@ -6,7 +6,7 @@ var express = require("express"),
     mongoose = require('mongoose'),
     User = require('./public/Users'),
     secretKey = require('./secretKey.json');
-    
+
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));   // to support URL-encoded bodie
@@ -55,7 +55,7 @@ User.getAuthenticated("nigga", "chootiya", function(err, user, reason) {
 // save user to database
 
 user1.save(function(err) {
-    
+
     if(err) {
         throw err;
     }
@@ -108,7 +108,7 @@ router.use(function (req,res,next) {
 
 
 router.get("/",function(req,res){
-res.render('login');
+res.render('loginPage');
 //res.sendFile(path + "index.html");
 });
 
@@ -135,7 +135,7 @@ app.post('/login',function(req, res) {
     getAuth(currentUser, function(sucess) {
         if(sucess)
             res.redirect("/user");
-        else 
+        else
             res.redirect("/");
     });
 });
@@ -146,8 +146,8 @@ console.log('Node app is running on port', app.get('port'));
 });
 
 function getAuth(user, sucess) {
-    
-    
+
+
     // attempt to authenticate user
     User.getAuthenticated(user.username, user.password, function(err, user, reason) {
         if (err) throw err;
@@ -172,17 +172,17 @@ function getAuth(user, sucess) {
                 sucess(false);
                 break;
         }
-        
-    });   
+
+    });
 }
 function createUser(user) {
-    
+
     user.save(function(err) {
         if(err) {
             return false;
             throw err;
-        }   
+        }
     });
     return true;
-    
+
 }
