@@ -9,34 +9,34 @@ var UserSchema = new Schema({
     name:   {type:  String, required:    true},
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
-    loginAttempts: { type: Number, required: true, default: 0 },
-    lockUntil: { type: Number }
+    //loginAttempts: { type: Number, required: true, default: 0 },
+    //lockUntil: { type: Number }
 });
 
 UserSchema.virtual('isLocked').get(function() {
-    // check for a future lockUntil timestamp
-    return !!(this.lockUntil && this.lockUntil > Date.now());
+    
+    return !!(this.lockUntil && this.lockUntil > Date.now());   // check for a future lockUntil timestamp
 });
 
 UserSchema.pre('save', function(next) {
     var user = this;
 
-// only hash the password if it has been modified (or is new)
-if (!user.isModified('password')) return next();
 
-// generate a salt
-bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    if (err) return next(err);
+    if (!user.isModified('password')) return next();    // only hash the password if it has been modified (or is new)
 
-    // hash the password using our new salt
-    bcrypt.hash(user.password, salt, function(err, hash) {
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {  // generate a salt
         if (err) return next(err);
 
-        // override the cleartext password with the hashed one
-        user.password = hash;
-        next();
+        // hash the password using our new salt
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if (err) return next(err);
+
+            // override the cleartext password with the hashed one
+            user.password = hash;
+            next();
+        });
     });
-});
 
 
 });
@@ -71,19 +71,17 @@ UserSchema.statics.getAuthenticated = function(username, password, cb) {
     this.findOne({ username: username }, function(err, user) {
         if (err) return cb(err);
 
-        // make sure the user exists
-        if (!user) {
+        
+        if (!user) {                // make sure the user exists
             return cb(null, null, reasons.NOT_FOUND);
         }
 
-        // check if the account is currently locked
-
-        // test for a matching password
-        user.comparePassword(password, function(err, isMatch) {
+        
+        user.comparePassword(password, function(err, isMatch) {  // test for a matching password
             if (err) return cb(err);
 
-            // check if the password was a match
-            if (isMatch) {
+            
+            if (isMatch) {                      // check if the password was a match
                     return cb(null, user);
             }
 
