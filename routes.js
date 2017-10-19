@@ -16,7 +16,7 @@ db.once('open', function() {
   console.log("mLabs Connected! ");
 });
 
-var UserKitty = new User();
+var UserKitty = User;
 
 
 router.use(function (req,res,next) {
@@ -39,14 +39,19 @@ router.post("/register", function(req, res) {
         password:   req.body.password,
         username:   req.body.email
     })
-    if(createUser(currentUser)) {
-    res.redirect("/user");
-    }
+    createUser(currentUser, function(err) {
+        if(err) {
+            res.send("the following error Occured: " + err);
+        }
+        else {
+            res.redirect("/user");
+        }
+    }); 
 });
 
 router.post('/login',function(req, res) {
     var currentUser = new UserKitty( {
-        username:    req.body.username,
+        username:   req.body.username,
         password:   req.body.password
     });
     getAuth(currentUser, function(sucess) {
@@ -88,15 +93,18 @@ function getAuth(user, sucess) {
     });
 }
 
-function createUser(user) {
+function createUser(user, cb) {
 
     user.save(function(err) {
         if(err) {
-            return false;
+            cb(err);
             throw err;
         }
+        else {
+            cb(null);
+        }
     });
-    return true;
+    
 
 }
 

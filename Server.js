@@ -1,8 +1,13 @@
 var express = require("express"),
     app = express(),
     path = __dirname + '/views/',
+    bodyParser = require('body-parser'),
     router = require('./routes.js');
 
+
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({ extended: false }));   // to support URL-encoded bodie
+        
 
 app.set('port', (process.env.PORT || 3000));
 
