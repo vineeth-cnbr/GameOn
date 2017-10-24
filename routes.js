@@ -51,6 +51,10 @@ router.get("/user", function(req, res) {
     res.render("user_homepage");
 });
 
+router.get("/playgrounds", function(req, res) {
+    res.render("Playgrounds");
+});
+
 router.post("/register", function(req, res) {
     var currentUser = new UserKitty( {
         name:   req.body.username,
