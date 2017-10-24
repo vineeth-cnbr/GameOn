@@ -21,7 +21,7 @@ db.once('open', function() {
 
 var UserKitty = User;
 var PlayG = PlayGround;
-setTimeout(function() {
+/*setTimeout(function() {
     var currentPG = new PlayG( {
     name : "Decathlone",
     area : "Marathhalli"
@@ -35,7 +35,22 @@ currentPG.save( function(err) {
     }
 });
 
-},3000);
+},3000); */
+var ids = new Array();
+PlayG.find({},function(err, playgrounds) {
+    playgrounds.forEach(function(playground) {
+        console.log(ids.push(playground._id));
+        console.log((playground._id));
+    });
+    for(var i=0;i<ids.length;i++) {
+        console.log(ids[i]);
+        PlayG.findOne({_id: ids[i]},function(err, data) {
+            console.log(data);
+        });
+    }
+});
+
+
 
 router.use(function (req,res,next) {
   console.log("/" + req.method);
@@ -53,6 +68,24 @@ router.get("/user", function(req, res) {
 
 router.get("/playgrounds", function(req, res) {
     res.render("Playgrounds");
+});
+
+router.get("/:id",function(req,res){
+    
+    query = req.params.id;
+    var q;
+    for(var i=0;i<ids.length;i++) {
+        console.log(ids[i] + query);
+        if(i==query-1) {
+            q = ids[i];
+            console.log();
+        }
+    }
+    PlayG.find({_id: q},function(err,data) {
+        console.log(data);
+    });
+    res.render("playgrounds");
+    //res.sendFile(path + "index.html");
 });
 
 router.post("/register", function(req, res) {
