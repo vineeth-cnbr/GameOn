@@ -4,20 +4,38 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     User = require('./public/Users'),
+    PlayGround = require('./public/PlayGrounds'),
     secretKey = require('./secretKey.json');
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));   // to support URL-encoded bodie
 
-mongoose.connect(secretKey.key, {useMongoClient: true});
+mongoose.connect(secretKey.key,{useMongoClient: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("mLabs Connected! ");
 });
 
-var UserKitty = User;
 
+
+var UserKitty = User;
+var PlayG = PlayGround;
+setTimeout(function() {
+    var currentPG = new PlayG( {
+    name : "Decathlone",
+    area : "Marathhalli"
+    });
+currentPG.save( function(err) {
+    console.log("inside save");
+    if(err) {
+        console.log("error is became");
+    } else {
+        console.log("Magic");
+    }
+});
+
+},3000);
 
 router.use(function (req,res,next) {
   console.log("/" + req.method);
