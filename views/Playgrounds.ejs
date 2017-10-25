@@ -2,11 +2,13 @@
     <div class="container">
     <div class="row">
         <div class="col l8">
-            <h1>PLAYGROUND NASA</h1>
+            <% if(ground) { %> 
+            <h1><%= ground.name + "here" %></h1>
+            <% } %>
             <p>This is the best playground in your city</p>
         </div>
         <div class="col l2"></div>
-        <div class="col l2">
+        <div class="col l2 s12 m2">
             <div class="row"></div>
             <button class="btn waves-effect waves-light" type="submit" name="action">BOOK<i class="material-icons right">add</i>
             </button>
