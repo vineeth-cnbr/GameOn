@@ -70,12 +70,15 @@ router.get("/playgrounds", function(req, res) {
     res.render("Playgrounds");
 });
 
+router.get("/playground-create", function(req,res) {
+    res.render("playground-create");
+});
 router.get("/:id",function(req,res){
     var ground;
     query = req.params.id;
     var q;
     for(var i=0;i<ids.length;i++) {
-        console.log(ids[i] + query);
+        console.log(ids[i] + "  " +query);
         if(i==query-1) {
             q = ids[i];
             console.log();
@@ -84,7 +87,7 @@ router.get("/:id",function(req,res){
     PlayG.find({_id: q},function(err,data) {
         console.log(data);
         ground = data;
-        res.render("playgrounds",ground);
+        res.render("playgrounds",{ ground });
     });
     
     //res.sendFile(path + "index.html");
