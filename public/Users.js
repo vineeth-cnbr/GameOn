@@ -6,9 +6,9 @@ var mongoose = require('mongoose'),
     LOCK_TIME = 2 * 60 * 60 * 1000;
 
 var UserSchema = mongoose.Schema({
-        username        : String,
-        password        : String,
-        name            : String
+        username        : {type:  String, required: true, index: { unique: true } },
+        password        : {type:  String, required: true, index: { unique: true } },
+        name            : {type:  String, required: true, index: { unique: true } }
     //loginAttempts: { type: Number, required: true, default: 0 },
     //lockUntil: { type: Number }
 });

@@ -25,10 +25,15 @@ router.route('/')
             if(err) {
                 res.send(err);
             }
-            else {    
-                res.render('viewPlaygrounds', {
-                    pgs
-                });
+            else {
+                if(req.isAuthenticated()) {
+                    res.render('viewPlaygrounds', {
+                        pgs, messages: "loggedIn"
+                    });
+                }else {
+                    res.render('viewPlaygrounds', { pgs, messages: null });
+                }    
+                
             }
         });
     });

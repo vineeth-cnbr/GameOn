@@ -24,7 +24,7 @@ module.exports = function(passport) {
     
      passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-        email : 'username',
+        username : 'email',
         password : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
@@ -45,12 +45,16 @@ module.exports = function(passport) {
             // if the user is found but the password is wrong
             else {
             
-            user.comparePassword(password, function(isMatch) {
-                 console.log("corrent auth");
+            user.comparePassword(password, function(err, isMatch) {
+                if(err) {
+                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+                }
                 if(isMatch) {
-                     return done(null, user);
+                    console.log("corrent auth");                    
+                     return done(null, user, req.flash('loginMessage', 'loggedIn'));
                 }
                 else {
+                    console.log("incorrent auth");
                      return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
                 }
             });
@@ -83,7 +87,7 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-        console.log(email + )
+        console.log(email + " " + password );
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
@@ -111,10 +115,11 @@ module.exports = function(passport) {
 
                 // save the user
                 newUser.save(function(err) {
-                    if (err)
+                    if (err) {
                         throw err;
-                    console.log("any err: " + err);
-                    return done(null, newUser);
+                        console.log("any err: " + err);
+                    }
+                    return done(null, newUser, req.flash('loginMessage','loggedIn'));
                 });
             }
 

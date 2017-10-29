@@ -4,7 +4,12 @@ module.exports = function(app, passport) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('loginPage.ejs'); // load the index.ejs file
+        if(req.isAuthenticated()) {
+            res.render('loginPage.ejs', { messages: "loggedIn" });
+        }else {
+            res.render('loginPage.ejs', { messages: null });
+        }
+         // load the index.ejs file
     });
 
     // =====================================
@@ -23,11 +28,11 @@ module.exports = function(app, passport) {
     // SIGNUP ==============================
     // =====================================
     // show the signup form
-    app.get('/signup', function(req, res) {
+    /*app.get('/signup', function(req, res) {
 
         // render the page and pass in any flash data if it exists
         res.render('loginPage.ejs', { message: req.flash('signupMessage') });
-    });
+    });*/
 
     // =====================================
     // LOGOUT ==============================
@@ -37,8 +42,12 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
     
-    app.get('/user', isLoggedIn,function(req, res) {
-        res.render('user_homepage.ejs');
+    app.get('/user', isLoggedIn,function(req, res) {  
+        if(req.isAuthenticated()) {
+            res.render('userPage.ejs', { messages: "loggedIn" });
+        }else {
+            res.render('userPage.ejs', { messages: null });
+        }     
     });
     
     
