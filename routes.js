@@ -69,16 +69,23 @@ router.get("/playgrounds", function(req, res) {
     res.render("Playgrounds");
 });
 
+<<<<<<< HEAD
 router.get("/book", function(req, res) {
     res.render("booking");
 });
 
 router.get("/playgrounds:id",function(req,res){
+=======
+router.get("/playground-create", function(req,res) {
+    res.render("playground-create");
+});
+router.get("/:id",function(req,res){
+>>>>>>> 0d83bf2b00d1c0176965041ae7242d0686f6c3d3
     var ground;
     query = req.params.id;
     var q;
     for(var i=0;i<ids.length;i++) {
-        console.log(ids[i] + query);
+        console.log(ids[i] + "  " +query);
         if(i==query-1) {
             q = ids[i];
             console.log();
@@ -87,7 +94,11 @@ router.get("/playgrounds:id",function(req,res){
     PlayG.find({_id: q},function(err,data) {
         console.log(data + data.name);
         ground = data;
+<<<<<<< HEAD
         res.render("Playgrounds", { ground });
+=======
+        res.render("playgrounds",{ ground });
+>>>>>>> 0d83bf2b00d1c0176965041ae7242d0686f6c3d3
     });
     
     //res.sendFile(path + "index.html");
