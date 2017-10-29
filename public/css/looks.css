@@ -1,6 +1,6 @@
 
 .cardcolor {
-    color: #33691e ;
+    color: #3a9715 ;
     
 }
 .tabs .indicator { 
@@ -16,4 +16,7 @@ nav {
 }
 .nav-wrapper {
     color: #000000;
+}
+.input-field .indicator {
+    color: #3a9715;
 }

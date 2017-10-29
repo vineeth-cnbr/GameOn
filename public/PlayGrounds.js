@@ -2,8 +2,12 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var PlayGroundSchema = new Schema({
-    name:   {type:  String, required:    true, index: { unique: true } },
-    area: { type: String, required: true} 
+    name:   {type:  String, required: true, index: { unique: true } },
+    area: { type: String, required: true}, 
+    id: {type: Number },
+    img: {type: String },
+    desc: {type: String},
+    contact: {type: String}
     //loginAttempts: { type: Number, required: true, default: 0 },
     //lockUntil: { type: Number }
 });

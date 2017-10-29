@@ -18,7 +18,6 @@ db.once('open', function() {
 });
 
 
-
 var UserKitty = User;
 var PlayG = PlayGround;
 /*setTimeout(function() {
@@ -63,14 +62,18 @@ res.render('loginPage');
 });
 
 router.get("/user", function(req, res) {
-    res.render("user_homepage");
+    res.render('user_homepage');
 });
 
 router.get("/playgrounds", function(req, res) {
     res.render("Playgrounds");
 });
 
-router.get("/:id",function(req,res){
+router.get("/book", function(req, res) {
+    res.render("booking");
+});
+
+router.get("/playgrounds:id",function(req,res){
     var ground;
     query = req.params.id;
     var q;
@@ -82,9 +85,9 @@ router.get("/:id",function(req,res){
         }
     }
     PlayG.find({_id: q},function(err,data) {
-        console.log(data);
+        console.log(data + data.name);
         ground = data;
-        res.render("playgrounds",ground);
+        res.render("Playgrounds", { ground });
     });
     
     //res.sendFile(path + "index.html");
@@ -119,7 +122,7 @@ router.post('/login',function(req, res) {
     });
 });
 
-function getAuth(user, sucess) {
+/*function getAuth(user, sucess) {
 
 
     // attempt to authenticate user
@@ -148,7 +151,9 @@ function getAuth(user, sucess) {
         }
 
     });
-}
+}*/
+ 
+
 
 function createUser(user, cb) {
 
