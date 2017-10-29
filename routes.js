@@ -94,7 +94,6 @@ router.get("/:id",function(req,res){
     PlayG.find({_id: q},function(err,data) {
         console.log(data + data.name);
         ground = data;
-<<<<<<< HEAD
         res.render("Playgrounds", { ground });
 =======
         res.render("playgrounds",{ ground });

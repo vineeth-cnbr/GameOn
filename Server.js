@@ -6,18 +6,24 @@ var express = require('express'),
     passport = require('passport'),
     flash    = require('connect-flash'),
     secretKey = require('./secretKey.json'),
-    router = require('./routes.js'),
+  //  router = require('./routes.js'),
     session = require('express-session'),
     APIrouter = require('./api.js'),
     PGrouter = require('./PGroutes.js');
 
-    mongoose.connect(secretKey.key,{useMongoClient: true});
-    require('./config/passport.js')(passport); // pass passport for configuration
-    app.use(bodyParser.json());       // to support JSON-encoded bodies
-    app.use(bodyParser.urlencoded({ extended: false }));   // to support URL-encoded bodie
-        
+mongoose.connect(secretKey.key,{useMongoClient: true});
+require('./config/passport.js')(passport); // pass passport for configuration
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({ extended: false }));   // to support URL-encoded bodie
 
-    app.set('port', (process.env.PORT || 3000));
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("mLabs Connected! ");
+});
+
+
+app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(__dirname + '/public'));
 app.use('/playgrounds', express.static(__dirname + '/public'));
