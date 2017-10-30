@@ -81,7 +81,12 @@ router.route("/:id")
                 res.err();
             }
             console.log(data);
-            res.render("playgrounds",{ data });
+            if(req.isAuthenticated()) { 
+                res.render("Playgrounds", { data, messages: null });
+            }
+            else {
+                res.render('Playgrounds', { data, messages: "loggedIn" })
+            }
         });
     })
     .post(function(req, res) {
