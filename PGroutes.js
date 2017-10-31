@@ -82,10 +82,10 @@ router.route("/:id")
             }
             console.log(data);
             if(req.isAuthenticated()) { 
-                res.render("Playgrounds", { data, messages: null });
+                res.render("Playgrounds", { data, messages: "loggedIn" });
             }
             else {
-                res.render('Playgrounds', { data, messages: "loggedIn" })
+                res.render('Playgrounds', { data, messages: null })
             }
         });
     })
