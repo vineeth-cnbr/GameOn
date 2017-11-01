@@ -42,6 +42,10 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
     
+    app.get('/sport', function(req, res) {
+            res.render('sport.ejs', { messages: null });
+    });
+    
     app.get('/user', isLoggedIn,function(req, res) {  
         if(req.isAuthenticated()) {
             res.render('userPage.ejs', { messages: "loggedIn" });

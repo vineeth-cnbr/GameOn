@@ -9,7 +9,8 @@ var express = require('express'),
   //  router = require('./routes.js'),
     session = require('express-session'),
     APIrouter = require('./api.js'),
-    PGrouter = require('./PGroutes.js');
+    PGrouter = require('./PGroutes.js'),
+    bookRouter = require('./bookRoutes');
 
 mongoose.connect(secretKey.key,{useMongoClient: true});
 require('./config/passport.js')(passport); // pass passport for configuration
@@ -27,6 +28,7 @@ app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(__dirname + '/public'));
 app.use('/playgrounds', express.static(__dirname + '/public'));
+app.use('/book', express.static(__dirname + '/public'));
 
 // views is directory for all template files
 app.set('views', path);
@@ -42,6 +44,7 @@ app.use(flash());
 require('./Userroutes.js')(app, passport);
 
 app.use('/playgrounds',PGrouter);
+app.use('/book',bookRouter);
 app.use('/api',APIrouter);
 
 app.listen(app.get('port'), function() {
