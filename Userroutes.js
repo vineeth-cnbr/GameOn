@@ -43,15 +43,12 @@ module.exports = function(app, passport) {
     });
     
     app.get('/sport', function(req, res) {
-            res.render('sport.ejs', { messages: null });
+        res.render('sport.ejs', { messages: null });
     });
     
     app.get('/user', isLoggedIn,function(req, res) {  
-        if(req.isAuthenticated()) {
-            res.render('userPage.ejs', { messages: "loggedIn" });
-        }else {
-            res.render('userPage.ejs', { messages: null });
-        }     
+        var user = req.user;
+        res.render('userPage.ejs', { messages: "loggedIn", user });    
     });
     
     

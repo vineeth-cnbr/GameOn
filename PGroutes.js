@@ -2,7 +2,7 @@ var express = require('express'),
     router = express.Router(),
     app = express(),
     bodyParser = require('body-parser');
-    PlayGround = require('./public/PlayGrounds');
+    PlayGround = require('./models/PlayGrounds');
 
 var ids = new Array();
 PlayGround.find({},function(err, playgrounds) {

@@ -1,7 +1,7 @@
 var express = require('express'),
     router = express.Router(),
     app = express(),
-    PlayGround = require('./public/PlayGrounds');
+    PlayGround = require('./models/PlayGrounds');
 var PlayG = PlayGround;
 var ids = new Array();
 /*PlayG.find({},function(err, playgrounds) {

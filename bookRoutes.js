@@ -2,8 +2,8 @@ var express = require('express'),
     router = express.Router(),
     app = express(),
     bodyParser = require('body-parser');
-    PlayGround = require('./public/PlayGrounds'),
-    Booking = require('./public/Booking');
+    PlayGround = require('./models/PlayGrounds'),
+    Booking = require('./models/Booking');
 
 router.route('/:id')
     .get(function(req, res) {
