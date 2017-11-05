@@ -5,12 +5,36 @@ var express = require('express'),
     PlayGround = require('./models/PlayGrounds'),
     Booking = require('./models/Booking');
 
+router.get('/confirm-:id',function(req, res) {
+    var venueId = req.params.id;
+    PlayGround.findOne({_id: venueId}, function(err, pg) {
+        var user = req.user;
+        var book = new Booking( {
+            date: req.query.date,
+            duration: req.query.time,
+            by: user,
+            venue: pg
+        });
+        book.save(function(err) {
+            if(err) {
+                console.log("booking not saved");
+                res.send("booking not saved");
+                
+            }else {
+                res.redirect("/user")
+            }
+        })
+    })
+    
+})
+
+
 router.route('/:id')
     .get(function(req, res) {
         var venueId = req.params.id;
-        console.log(req);
+        //console.log(req);
         PlayGround.findOne({_id: venueId}, function(err, pg) {
-            console.log(pg);
+            //console.log(pg);
             if(req.isAuthenticated()) {
                 var user = req.user;
                 req.pg = pg;
@@ -22,6 +46,6 @@ router.route('/:id')
             
         });
         
-    })
+    });
 
 module.exports = router;

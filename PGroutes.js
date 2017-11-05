@@ -7,13 +7,13 @@ var express = require('express'),
 var ids = new Array();
 PlayGround.find({},function(err, playgrounds) {
     playgrounds.forEach(function(playground) {
-        console.log(ids.push(playground._id));
-        console.log((playground._id));
+      //  console.log(ids.push(playground._id));
+      //  console.log((playground._id));
     });
     for(var i=0;i<ids.length;i++) {
         console.log(ids[i]);
         PlayGround.findOne({_id: ids[i]},function(err, data) {
-            console.log(data);
+        //    console.log(data);
         });
     }
 });

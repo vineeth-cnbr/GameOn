@@ -12,11 +12,20 @@
 <div class="container"> 
     <div class="row">
         <div class="col s12 l6">
-            
-            <h2>Booking</h2>
-            <p>At: <%=pg.name %></p>
-            <p>By: <%=user.name %></p>
-            
+            <form action="/book/confirm-<%=pg._id%>">
+                <h2>Booking</h2>
+                <p>At: <%=pg.name %></p>
+                <p>By: <%=user.name %></p>
+                <div class="input-field col s6">
+                    <input type="text" class="datepicker" name="date">
+                    <label for="date">Date</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" class="timepicker" name="time">
+                    <label for="time">Time</label>
+                </div>
+                <button type="submit">Book</button>
+            </form>
         </div>
     </div>
 </div>

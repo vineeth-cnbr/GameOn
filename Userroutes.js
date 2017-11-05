@@ -12,7 +12,7 @@ module.exports = function(app, passport) {
          // load the index.ejs file
     });
 
-    app.get(`/userProfile`, function(req, res){
+    app.get(`/userProfile`, isLoggedIn,  function(req, res){
         var user = req.user;
         res.render(`userProfile.ejs`, {messages: "loggedIn", user});
     });
