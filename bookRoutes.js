@@ -3,7 +3,8 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser');
     PlayGround = require('./models/PlayGrounds'),
-    Booking = require('./models/Booking');
+    Booking = require('./models/Booking'),
+    User = require('./models/Users');
 
 router.get('/confirm-:id',function(req, res) {
     var venueId = req.params.id;
@@ -15,13 +16,22 @@ router.get('/confirm-:id',function(req, res) {
             by: user,
             venue: pg
         });
-        book.save(function(err) {
+        book.save(function(err,boo) {
             if(err) {
                 console.log("booking not saved");
                 res.send("booking not saved");
                 
             }else {
-                res.redirect("/user")
+                User.update({_id:   user.id}, { "$push": { "bookings": boo._id } }, function(err, raw) {
+                    if(err) {
+                        console.log("not updated");
+                    }else  {
+                        console.log("updated user: " + raw);
+                        res.redirect("/user");
+                    }
+                    
+                });
+                
             }
         })
     })

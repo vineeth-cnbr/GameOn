@@ -9,7 +9,8 @@ var UserSchema = mongoose.Schema({
         username        : {type:  String, required: true, index: { unique: true } },
         password        : {type:  String, required: true },
         name            : {type:  String, required: true, index: { unique: true } },
-        area            : {type: String}
+        area            : {type: String},
+        bookings        : [ { type: Schema.Types.ObjectId, ref: 'bookings' } ]
     //loginAttempts: { type: Number, required: true, default: 0 },
     //lockUntil: { type: Number }
 });
