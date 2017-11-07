@@ -1,29 +1,33 @@
 <% include nav.ejs%>
       <div class="container">
         <div class="row">
-                <div class=card>
+                <div class="card">
                 <div class="card-content">
-                    <span class="card-title white-text">
+                    <span class="card-title green-text">
                     My Profile
-                    </span>                    
+                </span>                  
                 </div>
-                <div class="card-content">
+                <div class="card-content white">
                    <form >
                     <div class="input-field col s6">
                         <input value="<%=user.username%>" id="username" type="text" class="validate">
                         <label for="username">Username/Email Id</label>
                     </div>
                     <div class="input-field col s6">
-                        <input value="<%=user.password%>" id="password" type="password" class="validate">
+                        <input value="password" id="password" type="password" class="validate">
                         <label for="password">Password</label>
                     </div>
                     <div class="input-field col s6">
                         <input value="<%=user.email%>" id="email" type="email" class="validate">
                         <label for="email">Email</label>
                     </div>
+                    <div class="input-field col s6">
+                        <input value="<%= user.area %>" id="area" type="text" class="validate">
+                        <label for="area">Area</label>
+                    </div>
+                    <button class="btn waves-effect waves-light col s2">Save changes</button>
                 </form>
                 </div>
-            
                 </div>
         </div>
       </div>

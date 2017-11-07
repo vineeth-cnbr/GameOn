@@ -40,7 +40,12 @@ router.route('/')
 
 router.route("/create")
     .get(function(req,res){
-        res.render("playground-create");
+        if(req.isAuthenticated()) {
+            res.render("playground-create", { messages: "loggedIn"});
+        }
+        else {
+            res.render("playground-create", { messages: null });
+        }
     })
     .post(function(req, res) {
         PlayGround.find({},function(err, pgs) {
@@ -63,7 +68,7 @@ router.route("/create")
                         res.redirect('/playgrounds');
                     } 
                     else {
-                        res.err();
+                        res.send("error coccurred, playground not saved");
                     }
                 });
                 
@@ -71,6 +76,11 @@ router.route("/create")
         });
         
     });
+
+router.route("/edit")
+    .get(function(req, res) {
+
+    })    
 
 router.route("/:id")
     .get(function(req,res){
