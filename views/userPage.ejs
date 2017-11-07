@@ -14,73 +14,54 @@
         <div class="row"></div>
         <div class="row"></div>
         <div class="row">
-            <div class="left-align col s4 ">
-                <div class="card-panel hoverable" style="width:300px; height:500px;">
-                        <p><%= user.name + " " %></p>
-                    <div class="collection">
-                        <a href="#!" class="collection-item" ><span class="badge"></span><i class="material-icons prefix"> people</i>Friends</a>
-                        <a href="/userProfile" class="collection-item" ><span class="badge"></span><i class="material-icons profile">person</i>My profile</a>
-                    </div>
-                    <p><i class="material-icons">location_on</i> <%= user.area + " " %> </p>
+            <div class="left-align col s4">
+                <div class="card-panel hoverable">
+                    <img class="circle responsive-img" src="./img/1.png">
+                    <p><i class="material-icons">person</i>   <%=  user.name + " " %></p>
+                    <p><i class="Tiny material-icons">mail_outline</i>   <%=  user.username %></p>
+                    <% if(user.area!=undefined) { %>
+                        <p><i class="material-icons">location_on</i> <%= user.area + " " %> </p>
+                    <% } else {  %>
+                        <p><i class="material-icons">location_on</i> No Area set </p> 
+                    <% } %>
+                    <a class="modal-trigger" href="#modal1"><i class="material-icons">edit</i>Edit Profile</a>
+                    
                 </div>
             </div>
-            <div class="centre-align col s4">
-                    <a href="#!" class="btn" onclick="Materialize.fadeInImage('#image-test')"><i class="material-icons pprefix">near_me</i> Play grounds around me</a>
-                <div class="row"></div>
-                <div class="row"></div>
-                <div class="card-content grey lighten-4 z-depth-4">
-                    <form>
-                    <div class="input-field">
-                            <button class="btn-flat waves-effect waves-light col right" type="submit"><i class="material-icons">send</i></button>
-                        <input name="something" id="something" type="text">                        
-                        <label for="something"><i class="material-icons">create</i>Write something....
-                        </label>
-                    </div>
-                    </form>
+            <div class="left-align col s8">
+                <div class="card-panel hoverable">
+                    <h4>My Bookings</h4>
+                    <% for(var i=0; i<user.bookings.length;i++) { %>
+                            <ul class="collection">
+                                    <li class="collection-item"><%=user.bookings._id%>></li>
+                            </ul>
+                    <% } %>
                 </div>
-            </div> 
-            <!--
-            <div class="col s8">
-                <div class="card">
-                    <div class="card-content">
-                      <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                    </div>
-                    <div class="card-tabs">
-                      <ul class="tabs tabs-fixed-width">
-                        <li class="tab"><a href="#test4">Test 1</a></li>
-                        <li class="tab"><a class="active" href="#test5">Test 2</a></li>
-                        <li class="tab"><a href="#test6">Test 3</a></li>
-                      </ul>
-                    </div>
-                    <div class="card-content grey lighten-4">
-                      <div id="test4">Test 1</div>
-                      <div id="test5">Test 2</div>
-                      <div id="test6">Test 3</div>
-                    </div>
-                  </div>
-            </div>  -->
-            <div class="right-align col s4 ">
-                    <div class="">My recent bookings</a>
-                    <ul id="dropdown2" class="dropdown-content">
-                        <li><a href="#!"><%= %></a>
-                        </li>
-                        <li><a href="#!"><%= %></a></li>
-                        <li><a href="#!">Show more..</a></li>
-                    </ul>    
-                <ul id="slide-out" class="side-nav">
-                        <li><div class="user-view">
-                            <div class="background">
-                            <img src="">
-                            </div>
-                            <a href="#!user"><img class="circle" src=""></a>
-                            <a href="#!name"><span class="white-text name"><%= user.username %></span></a>
-                            <a href="#!email"><span class="white-text email"><%= user.email%></span></a>
-                        </div></li>
-                        <li><a href="#!"><i class="material-icons"></i>Click here to start a new conversation</a></li>
-                        <li><div class="divider"></div></li>
-                        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-                </ul>
             </div>
+        </div>
+           
+        <div id="modal1" class="modal">
+            <form action="/user/update" method="POST" >
+            <div class="modal-content">
+              <h4>Edit Your Profile</h4>
+              <br>
+              
+                <div class="input-field col s12">
+                    <input value="<%=user.name%>" name="name" id="name" type="text" class="validate">
+                    <label for="name">Name</label>
+                </div>
+                <div class="input-field col s12">
+                    <input value="<%= user.area %>" name="area" id="area" type="text" class="validate">
+                    <label for="area">Area</label>
+                </div>
+                
+            
+            </div>
+            <div class="modal-footer">
+                <button class="modal-action modal-close waves-effect waves-green btn-flat" type="submit">SAVE CHANGES</button>                    
+
+            </div>
+            </form>
         </div>
     </div>
 

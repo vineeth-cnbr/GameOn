@@ -3,6 +3,8 @@ module.exports = function(app, passport) {
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
+
+    var Booking = require('./models/Booking');
     app.get('/', function(req, res) {
         if(req.isAuthenticated()) {
             res.render('loginPage.ejs', { messages: "loggedIn" });
@@ -52,8 +54,39 @@ module.exports = function(app, passport) {
     
     app.get('/user', isLoggedIn,function(req, res) {  
         var user = req.user;
-        res.render('userPage.ejs', { messages: "loggedIn", user });    
+        var bookids = user.bookings;
+        console.log(bookids);
+        var bookObjs =  new Array();
+        for(var i=0;i<bookids.length;i++) {
+            Booking.findOne({_id: bookids[i]},function(err, data) {
+                bookObjs.push(data);
+                console.log(data);
+                if(i==bookids.length-1) {
+                    console.log("12")
+                    console.log(bookObjs);
+                    res.render('userPage.ejs', { messages: "loggedIn", user, bookObjs });
+                }
+            });
+        }
+        Booking.findOne({})
+            
     });
+
+    app.post('/user/update', function(req, res) { 
+        var name = req.body.name;
+        var area = req.body.area;
+        User.update({ "_id": req.user._id }, { "name": name, "area": area }, function(err, data) {
+            if(!err) {
+                console.log("User updated");
+                res.redirect('/user');
+            }
+            else {
+                console.log("Not updated");
+                res.redirect('/user');
+            } 
+        }) ;
+
+    })
     
     
     app.post('/signup', passport.authenticate('local-signup', {

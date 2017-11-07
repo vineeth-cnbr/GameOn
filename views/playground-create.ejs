@@ -17,6 +17,17 @@
                         <label for="area">Area</label>
                     </div>
                     <div class="input-field col s12">
+                        <select multiple name= "sport">
+                          <option value="" disabled selected > Sports </option>
+                          <option value="Football" >Football</option>
+                          <option value="Cricket">Cricket</option>
+                          <!--<option >Badminton</option>
+                          <option >Swimming</option>
+                          <option >Tennis</option>-->    
+                        </select>
+                        <label>Sports available</label>
+                    </div>
+                    <div class="input-field col s12">
                         <input name="desc" id="desc" type="text" class="validate">
                         <label for="desc">Desc</label>
                     </div>
@@ -28,6 +39,7 @@
                         <input name="img" id="img" type="text" class="validate">
                         <label for="img">Image URL link</label>
                     </div>
+                    
                         <button class="btn waves-effect waves-light" style="background-color: #3a9715" type="submit" name="action">Submit
                                 <i class="material-icons right">send</i>
                         </button>
