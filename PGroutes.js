@@ -38,6 +38,18 @@ router.route('/')
     });
 });
 
+router.get('/delete-:id',function(req, res) {
+    //console.log(req.params.id);
+    var id = req.params.id;
+    PlayGround.remove({_id: id}, function(err, doc) {
+        if(err) {
+            res.send("Playground not removed, go back");
+        } else {
+            res.redirect('/playgrounds/edit')
+        }
+    })
+});
+
 router.route("/create")
 .get(function(req,res){
     if(req.isAuthenticated()) {
@@ -79,6 +91,26 @@ router.route("/create")
     });
     
 });
+
+router.route("/update-:id")
+    .post(function(req, res) {
+        var id = req.params.id;
+        PlayGround.update({_id: id}, {
+            name: req.body.name,
+            area: req.body.area,
+            img: req.body.img,
+            desc: req.body.desc,
+            contact: req.body.contact,
+            sports: req.body.sport
+        },function(err, data) {
+            if(err) {
+                res.send("Playground not updated");
+            }else {
+                res.redirect('/playgrounds/edit');
+            }
+        })
+        
+    })
 
 router.route("/edit")
     .get(function(req, res) {

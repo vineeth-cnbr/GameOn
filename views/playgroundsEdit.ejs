@@ -33,7 +33,7 @@
 </div>
 <% for(var i=0;i< pgs.length;i++) { %>
 <ul id="drop_options_<%=i%>" class="dropdown-content">
-        <li><a href="#!">Update</a></li>
+        <li><a class="modal-trigger" href="#modal_update_<%=i%>">Update</a></li>
         <li class="divider"></li>
         <li><a class="modal-trigger" href="#modal_delete_<%=i%>">Delete</a></li>
 </ul>
@@ -42,12 +42,62 @@
 <div id="modal_delete_<%=i%>" class="modal bottom-sheet">
         <div class="modal-content">
           <h4>Delete</h4>
-          <p>Are you sure to delete</p>
+          <p>Are you sure to delete <%=pgs[i].name%></p>
         </div>
         <div class="modal-footer">
-          <a href="#!" class="modal-action modal-close waves-effect waves-red btn">Delete</a>
+          <a href="/playgrounds/delete-<%=pgs[i]._id%>" class="modal-action modal-close waves-effect waves-red btn">Delete</a>
         </div>
 </div>
+
+<div id="modal_update_<%=i%>" class="modal">
+        <form action="/playgrounds/update-<%=pgs[i]._id%>" method="POST" >
+        <div class="modal-content">
+          <h4>Edit Existing Playground</h4>
+          <br>
+          <div class="input-field col s12">
+                <input name="name" id="name" value="<%=pgs[i].name%>" type="text" class="validate">
+                <label for="name">Playground Name</label>
+            </div>
+            <div class = "input-field col s12">
+                <input name="area" id="area" value="<%=pgs[i].area%>" type="text" class="validate">
+                <label for="area">Area</label>
+            </div>
+            <div class="input-field col s12">
+                <select multiple name= "sport">
+                  <option value="" disabled selected > Sports </option>
+                  <option value="Football" >Football</option>
+                  <option value="Cricket">Cricket</option>
+                  <option value="Badminton">Badminton</option>
+                  <option value="Swimming">Swimming</option>
+                  <option value="Tennis">Tennis</option>    
+                </select>
+                <label>Sports available</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="desc" id="desc" value="<%=pgs[i].desc%>" type="text" class="validate">
+                <label for="desc">Desc</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="contact" id="contact" value="<%=pgs[i].contact%>" type="tel" class="validate">
+                <label for="contact">Contact</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="img" id="img" value="<%=pgs[i].img%>" type="text" class="validate">
+                <label for="img">Image URL link</label>
+            </div>
+            
+            
+        
+        </div>
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-green btn-flat" type="submit">SAVE CHANGES</button>                    
+
+        </div>
+        </form>
+</div>
+
+
+
 
 <% } %>
 
@@ -69,9 +119,9 @@
                   <option value="" disabled selected > Sports </option>
                   <option value="Football" >Football</option>
                   <option value="Cricket">Cricket</option>
-                  <option >Badminton</option>
-                  <option >Swimming</option>
-                  <option >Tennis</option>    
+                  <option value="Badminton">Badminton</option>
+                  <option value="Swimming">Swimming</option>
+                  <option value="Tennis">Tennis</option>    
                 </select>
                 <label>Sports available</label>
             </div>
@@ -96,7 +146,7 @@
 
         </div>
         </form>
-    </div>
+</div>
 
 
 <% include foot %>

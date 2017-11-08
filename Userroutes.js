@@ -64,7 +64,7 @@ module.exports = function(app, passport) {
             } else {
                 console.log(users);
                 
-                res.render('userPage.ejs', { messages: flashMessage ,  users });
+                res.render('userPage.ejs', { messages: "loggedIn" ,  users });
             }
         });
 
