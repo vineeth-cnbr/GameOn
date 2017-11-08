@@ -5,7 +5,7 @@ var BookingSchema = new Schema( {
     date: {type: String, required: true},
     duration: {type: String},
     by: {type: Schema.Types.ObjectId, ref: 'users', required: true},
-    venue: {type: Schema.Types.ObjectId, ref: 'playgrounds', required: true}
+    venue: {type: Schema.Types.ObjectId, ref: 'Playgrounds', required: true}
 });
 
 module.exports = mongoose.model('Booking', BookingSchema);

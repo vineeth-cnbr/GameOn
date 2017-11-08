@@ -22,7 +22,7 @@ router.get('/confirm-:id',function(req, res) {
                 res.send("booking not saved");
                 
             }else {
-                User.update({_id:   user.id}, { "$push": { "bookings": boo._id } }, function(err, raw) {
+                User.update({_id:   user.id}, { "$push": { "mybookings": boo._id } }, function(err, raw) {
                     if(err) {
                         console.log("not updated");
                     }else  {

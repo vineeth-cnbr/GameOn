@@ -54,21 +54,17 @@ module.exports = function(app, passport) {
     
     app.get('/user', isLoggedIn,function(req, res) {  
         var user = req.user;
-        var bookids = user.bookings;
-        console.log(bookids);
-        var bookObjs =  new Array();
-        for(var i=0;i<bookids.length;i++) {
-            Booking.findOne({_id: bookids[i]},function(err, data) {
-                bookObjs.push(data);
-                console.log(data);
-                if(i==bookids.length-1) {
-                    console.log("12")
-                    console.log(bookObjs);
-                    res.render('userPage.ejs', { messages: "loggedIn", user, bookObjs });
-                }
-            });
-        }
-        Booking.findOne({})
+        //var bookids = user.bookings;
+        // console.log(user);
+        User.findOne({_id: user._id}).populate('bookings').populate( { path: "bookings", populate: { path: 'venue'} }).exec( function(err, users) {
+            if(err) {
+                console.log("not populating cuz" + err);
+            } else {
+                console.log(users);
+                res.render('userPage.ejs', { messages: "loggedIn",  users });
+            }
+        });
+
             
     });
 

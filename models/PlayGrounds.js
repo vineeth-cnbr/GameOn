@@ -8,7 +8,7 @@ id: {type: Number },
 img: {type: String },
 desc: {type: String},
 contact: {type: String},
-bookings: [ { type: Schema.Types.ObjectId, ref: 'bookings' } ],
+bookings: [ { type: Schema.Types.ObjectId, ref: 'Bookings' } ],
 sports:[{type: String, required: true}]
 //loginAttempts: { type: Number, required: true, default: 0 },
 //lockUntil: { type: Number }
