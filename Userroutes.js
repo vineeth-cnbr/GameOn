@@ -9,7 +9,9 @@ module.exports = function(app, passport) {
         if(req.isAuthenticated()) {
             res.render('loginPage.ejs', { messages: "loggedIn" });
         }else {
-            res.render('loginPage.ejs', { messages: null });
+            var flashMessage = req.flash('loginMessage'); 
+            console.log("message " + flashMessage);
+            res.render('loginPage.ejs', { messages: flashMessage });
         }
          // load the index.ejs file
     });
@@ -61,7 +63,8 @@ module.exports = function(app, passport) {
                 console.log("not populating cuz" + err);
             } else {
                 console.log(users);
-                res.render('userPage.ejs', { messages: "loggedIn",  users });
+                
+                res.render('userPage.ejs', { messages: flashMessage ,  users });
             }
         });
 

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col l3"></div>
             <div class="col s12 m6 l6">
-             <div class="card cardcolor">
+             <div class="card cardcolor hoverable">
             <div class="card-content">
               <h5 class="text">GameOn</h5>
             </div>
@@ -67,6 +67,11 @@
             </div>
        </div>
     </div>
+    <script>
+    <% if(messages!= 'loggedIn' && messages!=null) { %>
+      Materialize.toast("The credentials are wrong!", 4000);
+    <% } %>
+    </script>
 
 
 <% include foot.ejs %>

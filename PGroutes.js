@@ -81,9 +81,17 @@ router.route("/create")
 });
 
 router.route("/edit")
-.get(function(req, res) {
-
-})    
+    .get(function(req, res) {
+        PlayGround.find({}, function(err, pgs) {
+            if (err) {
+                res.send("error occured");
+            }
+            if(req.isAuthenticated())
+                res.render('playgroundsEdit',{ messages: "isLoggedIn", pgs });
+                else 
+                res.render('playgroundsEdit',{ messages: null, pgs});
+        });
+    })    
 
 router.route("/:id")
 .get(function(req,res){

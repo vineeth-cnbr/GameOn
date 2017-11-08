@@ -35,7 +35,7 @@
                         <% for(var i=0;i<users.bookings.length;i++) { %>
                             
                                     <li class="collection-item">
-                                        <a href="/book/">
+                                        <a href="/book/<%=users.bookings[i].venue._id%>">
                                         <%= users.bookings[i].venue.name + " on " + users.bookings[i].date + " at " + users.bookings[i].duration %>
                                         </a></li>
                             

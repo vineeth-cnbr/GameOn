@@ -1,0 +1,102 @@
+<% include nav %>
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col s12">
+            <div class="card-panel hoverable">
+                    
+                        
+                    <h3>All Playgrounds <a style="background-color: #28d928" href="#modal_create" class="btn modal-trigger right">Create A New PlayGround</a></h3>
+                    
+                            <br>         
+                            <ul class="collection with-header">
+                                    <% for(var i=0;i< pgs.length;i++) { %>
+                                        <li class="collection-item">
+                                        <a href="/playgrounds/<%=pgs[i]._id%>" style="color: black"><%=pgs[i].name%></a>
+                                        <a style="color: #28d928" class="dropdown-button left" href="#!" data-activates="drop_options_<%=i%>">
+                                        <i class="material-icons left">more_vert</i>
+                                        </a>
+                                        </li>
+                                          
+                                    <% } %>
+                                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    Create/Read/Update/Delete Existing Playgrounds
+                                    <br>
+                                    <br><br>
+                            </ul>
+                    
+                        
+                    
+            </div>
+        </div>
+    </div>
+</div>
+<% for(var i=0;i< pgs.length;i++) { %>
+<ul id="drop_options_<%=i%>" class="dropdown-content">
+        <li><a href="#!">Update</a></li>
+        <li class="divider"></li>
+        <li><a class="modal-trigger" href="#modal_delete_<%=i%>">Delete</a></li>
+</ul>
+
+
+<div id="modal_delete_<%=i%>" class="modal bottom-sheet">
+        <div class="modal-content">
+          <h4>Delete</h4>
+          <p>Are you sure to delete</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-red btn">Delete</a>
+        </div>
+</div>
+
+<% } %>
+
+<div id="modal_create" class="modal">
+        <form action="/playgrounds/create" method="POST" >
+        <div class="modal-content">
+          <h4>Create New Playground</h4>
+          <br>
+          <div class="input-field col s12">
+                <input name="name" id="name" type="text" class="validate">
+                <label for="name">Playground Name</label>
+            </div>
+            <div class = "input-field col s12">
+                <input name="area" id="area" type="text" class="validate">
+                <label for="area">Area</label>
+            </div>
+            <div class="input-field col s12">
+                <select multiple name= "sport">
+                  <option value="" disabled selected > Sports </option>
+                  <option value="Football" >Football</option>
+                  <option value="Cricket">Cricket</option>
+                  <option >Badminton</option>
+                  <option >Swimming</option>
+                  <option >Tennis</option>    
+                </select>
+                <label>Sports available</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="desc" id="desc" type="text" class="validate">
+                <label for="desc">Desc</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="contact" id="contact" type="tel" class="validate">
+                <label for="contact">Contact</label>
+            </div>
+            <div class="input-field col s12">
+                <input name="img" id="img" type="text" class="validate">
+                <label for="img">Image URL link</label>
+            </div>
+            
+            
+        
+        </div>
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-green btn-flat" type="submit">SAVE CHANGES</button>                    
+
+        </div>
+        </form>
+    </div>
+
+
+<% include foot %>
