@@ -32,6 +32,11 @@
                 <div class="card-panel hoverable">
                     <h4>My Bookings</h4>
                     <ul class="collection">
+                        <% if(users.bookings.length==0) { %>
+                            <li class="collection-item">
+                                    You have no bookings Yet
+                            </li>
+                        <% } else { %>    
                         <% for(var i=0;i<users.bookings.length;i++) { %>
                             
                                     <li class="collection-item">
@@ -39,7 +44,7 @@
                                         <%= users.bookings[i].venue.name + " on " + users.bookings[i].date + " at " + users.bookings[i].duration %>
                                         </a></li>
                             
-                        <% } %>                
+                        <% } } %>                
                     </ul>
                 </div>
             </div>
@@ -64,6 +69,8 @@
             </div>
             <div class="modal-footer">
                 <button class="modal-action modal-close waves-effect waves-green btn-flat" type="submit">SAVE CHANGES</button>                    
+                <a class="modal-action modal-close waves-effect waves btn-flat" style="color:red" href="/delete-<%=users._id%>">
+                    delete account</a>
 
             </div>
             </form>

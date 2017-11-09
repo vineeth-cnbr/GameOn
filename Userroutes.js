@@ -107,6 +107,20 @@ module.exports = function(app, passport) {
         username:   req.body.email
     })
     });
+
+    app.get('/delete-:id',function(req, res) {
+        //console.log(req.params.id);
+        var id = req.params.id;
+        User.remove({_id: id}, function(err, doc) {
+            if(err) {
+                res.send("User not removed, go back");
+            } else {
+                req.logout();
+                res.redirect('/');
+            }
+        })
+    });
+    
     /*/*createUser(currentUser, function(err) {
         if(err) {
             res.send("the following error Occured: " + err);

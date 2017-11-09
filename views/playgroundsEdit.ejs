@@ -41,11 +41,12 @@
 
 <div id="modal_delete_<%=i%>" class="modal bottom-sheet">
         <div class="modal-content">
-          <h4>Delete</h4>
-          <p>Are you sure to delete <%=pgs[i].name%></p>
+          <h4>Delete <%=pgs[i].name%></h4>
+          <p>Are you sure to delete <%=pgs[i].name%> in <%=pgs[i].area%> </p>
         </div>
         <div class="modal-footer">
-          <a href="/playgrounds/delete-<%=pgs[i]._id%>" class="modal-action modal-close waves-effect waves-red btn">Delete</a>
+          <a href="/playgrounds/delete-<%=pgs[i]._id%>" style="color:red" class="modal-action modal-close waves-effect waves-red btn-flat">
+            Delete</a>
         </div>
 </div>
 

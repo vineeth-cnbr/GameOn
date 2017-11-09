@@ -119,8 +119,8 @@ router.route("/edit")
                 res.send("error occured");
             }
             if(req.isAuthenticated())
-                res.render('playgroundsEdit',{ messages: "isLoggedIn", pgs });
-                else 
+                res.render('playgroundsEdit',{ messages: "loggedIn", pgs });
+            else 
                 res.render('playgroundsEdit',{ messages: null, pgs});
         });
     })    
@@ -131,7 +131,7 @@ router.route("/:id")
     console.log(query);
     PlayGround.find({_id: query},function(err,data) {
         if(err) {
-            res.err();
+            res.send("could  not find the playground");
         }
         console.log(data);
         if(req.isAuthenticated()) { 
